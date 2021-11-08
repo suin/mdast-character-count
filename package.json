@@ -1,0 +1,125 @@
+{
+  "name": "@suin/mdast-character-count",
+  "version": "0.0.0-development",
+  "description": "A utility to count characters in Markdown",
+  "keywords": [
+    "unist",
+    "mdast",
+    "mdast-util",
+    "markdown",
+    "character-count",
+    "character-counter"
+  ],
+  "homepage": "https://github.com/suin/mdast-character-count#readme",
+  "bugs": {
+    "url": "https://github.com/suin/mdast-character-count/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/suin/mdast-character-count.git"
+  },
+  "license": "MIT",
+  "author": "suin <suinyeze@gmail.com>",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "files": [
+    "**/*.{js,ts,map}",
+    "!*.{test,spec}.*",
+    "!/types/this.d.ts",
+    "!/types/devOnly.d.ts",
+    "!/testUtil.*"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "git clean -Xdf -e '!/.idea/**' -e '!/node_modules' -e '!/node_modules/**'",
+    "clean:dry": "git clean -Xdfn -e '!/.idea/**' -e '!/node_modules' -e '!/node_modules/**'",
+    "format": "pnpm prettier -- --write",
+    "format:check": "pnpm prettier -- --check",
+    "pack:preview": "PACKAGE=$(npm pack --ignore-scripts 2> /dev/null) sh -c 'set -eu && tar tf $PACKAGE | sort && rm $PACKAGE'",
+    "prettier": "prettier '**/*.{ts,tsx,json,json5,css,scss,graphql,gql,md,mdx,html,vue,yaml}'",
+    "reference": "typedoc --gitRevision \"`git describe --tags --abbrev=0 2>/dev/null || echo main`\" --out reference index.ts",
+    "reset": "git clean -Xdf -e '!/.idea/**'",
+    "reset:dry": "git clean -Xdfn -e '!/.idea/**'",
+    "semantic-release": "semantic-release",
+    "test": "jest"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx,json,json5,css,scss,graphql,gql,md,mdx,html,vue,yaml}": "prettier --write",
+    "./package.json": "sort-package-json"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "snapshotSerializers": [
+      "jest-snapshot-serializer-raw/always"
+    ]
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "release": {
+    "branches": [
+      "main"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/npm",
+        {
+          "npmPublish": true
+        }
+      ],
+      "@semantic-release/github",
+      [
+        "@semantic-release/changelog",
+        {
+          "changelogFile": "CHANGELOG.md"
+        }
+      ],
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "package.json",
+            "CHANGELOG.md"
+          ]
+        }
+      ],
+      [
+        "@semantic-release/exec",
+        {
+          "successCmd": "pnpm reference"
+        }
+      ]
+    ]
+  },
+  "devDependencies": {
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/exec": "^6.0.2",
+    "@semantic-release/git": "^10.0.1",
+    "@types/jest": "^27.0.2",
+    "@types/unist": "^2.0.6",
+    "husky": "^7.0.4",
+    "jest": "^27.3.1",
+    "jest-snapshot-serializer-raw": "^1.2.0",
+    "lint-staged": "^11.2.6",
+    "mdast-util-from-markdown": "^0.8.5",
+    "mdast-util-gfm": "^0.1.2",
+    "micromark-extension-gfm": "^0.3.3",
+    "outdent": "^0.8.0",
+    "prettier": "^2.4.1",
+    "semantic-release": "^18.0.0",
+    "sort-package-json": "^1.52.0",
+    "ts-jest": "^27.0.7",
+    "typedoc": "^0.22.8",
+    "typescript": "^4.4.4",
+    "unist-util-inspect": "^6.0.0",
+    "unist-util-visit": "^2.0.3"
+  }
+}
