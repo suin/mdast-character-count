@@ -1,6 +1,6 @@
 {
   "name": "@suin/mdast-character-count",
-  "version": "0.0.0-development",
+  "version": "1.0.0",
   "description": "A utility to count characters in Markdown",
   "keywords": [
     "unist",
